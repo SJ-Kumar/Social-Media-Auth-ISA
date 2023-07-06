@@ -15,17 +15,30 @@ Run the below command in the root directory to install all required packages for
 npm install
 ```
 
-Create FireBase Account and get the required Secret Keys
+Create FireBase Account and get the required Secret Keys then create a file inside src folder called firebase.config.js and add the following. Make sure to add the required secret keys inside "" :
 
 ```
-apiKey: "",
-authDomain: "",
-projectId: "",
-storageBucket: "",
-messagingSenderId: "",
-appId: "",
-measurementId: ""
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+  measurementId: ""
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 ```
 
 ## Running process
