@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-twitter-blue {
+  background-color: #1da1f2;
+}
+
 .react-tel-input .form-control {
   @apply !w-full py-6 !text-base;
 }
@@ -12,3 +16,12 @@
 .opt-container input {
   @apply !mr-0 flex-1 py-5 outline-none;
 }
+
+.custom-button {
+  @apply bg-blue-700 text-white;
+}
+
+.custom-button:hover {
+  @apply bg-emerald-600;
+}
+
