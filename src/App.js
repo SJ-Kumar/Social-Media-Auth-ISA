@@ -1,13 +1,12 @@
+import { useEffect, useState } from "react";
 import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
-
 import OtpInput from "otp-input-react";
-import { useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import { auth } from "./firebase.config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const App = () => {
   const [otp, setOtp] = useState("");
@@ -15,6 +14,43 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [user, setUser] = useState(null);
+  const [status] = useState("");
+  const [principalSubdivision, setPrincipalSubdivision] = useState("");
+  const [city, setcity] = useState("");
+
+  
+
+  const findMyState = () => {
+    const success = (position) => {
+      console.log(position);
+      const latitude=position.coords.latitude;
+      const longitude=position.coords.longitude;
+
+      const geoApiUrl=`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+
+      fetch(geoApiUrl)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setcity(data.city);
+        setPrincipalSubdivision(data.principalSubdivision);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    };
+
+    const error = () => {
+      toast.error("Unable to retrieve your location. Please click 'Allow' to continue.");
+    };
+
+    navigator.geolocation.getCurrentPosition(success, error);
+  };
+
+  useEffect(() => {
+    findMyState();
+  }, []);
 
   function onCaptchVerify() {
     if (!window.recaptchaVerifier) {
@@ -32,6 +68,7 @@ const App = () => {
     }
   }
 
+
   function onSignup() {
     setLoading(true);
     onCaptchVerify();
@@ -45,7 +82,7 @@ const App = () => {
         window.confirmationResult = confirmationResult;
         setLoading(false);
         setShowOTP(true);
-        toast.success("OTP sended successfully!");
+        toast.success("OTP sent successfully!");
       })
       .catch((error) => {
         console.log(error);
@@ -133,13 +170,30 @@ const App = () => {
                   )}
                   <span>Send code via SMS</span>
                 </button>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
+                <button
+                onClick={findMyState}
+                className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                >
+                  {loading && (
+                  <CgSpinner size={20} className="mt-1 animate-spin" />
+                  )}
+                  <span>Find My State</span>
+                  </button>
+                  </>
+                  )}
+                  </div>
+                )}
+                <div className="status">{status}</div>
+                <div className="flex flex-col items-end">
+                  {principalSubdivision && city && (
+                  <div className="mt-4 text-center text-white font-medium">
+                    Hey there! Hope you're enjoying being at {city},{principalSubdivision}
+                  </div>
+                )}
+                </div>
+              </div>
+            </section>
+          )
+        };
 
 export default App;
