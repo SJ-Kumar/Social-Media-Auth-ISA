@@ -22,6 +22,7 @@ const App = () => {
   const [city, setcity] = useState("");
   const [tweets, setTweets] = useState([]);
   const [loggedInMobileNumber, setLoggedInMobileNumber] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
 
 
@@ -160,6 +161,15 @@ const App = () => {
     const newTweets = [...tweets, tweetData];
     setTweets(newTweets);
   }
+  function handleLogout() {
+    auth.signOut().then(() => {
+      setUser(null);
+      setLoggedInMobileNumber("");
+      setPh("");
+      setShowOTP(false);
+      setLoading(false);
+    });
+  }
 
   if (user) {
     return (
@@ -273,10 +283,19 @@ const App = () => {
         </head>
         <body>
         {user && (
-        <div className="logged-in-mobile-number">
-          Logged in as: {loggedInMobileNumber}
-        </div>
-      )}
+          <div className="logged-in-mobile-number"style={{ position: 'absolute', top: 0, left: 0, padding: '5px 10px' }}>
+            Logged in as: {loggedInMobileNumber}
+            <div
+              className={`dropdown ${dropdownOpen ? "open" : ""}`}
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              <button className="dropbtn">▼</button>
+              <div className={`dropdown-content ${dropdownOpen ? "show" : ""}`}>
+                <a onClick={handleLogout}>Logout</a>
+              </div>
+            </div>
+          </div>
+        )}
         <div>
         <h1>Twitter Timeline</h1>
         <div id="overall">
@@ -338,7 +357,7 @@ const App = () => {
               {loading && (
                 <CgSpinner size={20} className="mt-1 animate-spin" />
               )}
-              <span>Send code via SMS</span>
+              <span>Login using OTP</span>
             </button>
             <button
               onClick={findMyState}
