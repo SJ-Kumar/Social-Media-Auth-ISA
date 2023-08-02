@@ -50,5 +50,5 @@ npm start
 
 ```
 
-### Research Paper: [Social Media User Authentication](https://drive.google.com/file/d/1i1PPK5zA50B3c7AbSWazA_cKKH5gCFVF/view?usp=sharing)
+## Research Paper: [Social Media User Authentication](https://drive.google.com/file/d/1i1PPK5zA50B3c7AbSWazA_cKKH5gCFVF/view?usp=sharing)
 
