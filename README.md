@@ -50,5 +50,5 @@ npm start
 
 ```
 
-### Research Paper: [Social Media User Authentication](https://github.com/SJ-Kumar/Social-Media-Auth-ISA/blob/a4ea3d8ad69fa531abc415ae68a38efc275894fa/21BCE1218_ISA%20RESEARCH%20PAPER%20(SECURITY%20METHODS%20TO%20VERIFY%20USER%20AUTHENTICITY.pdf))
+### Research Paper: [Social Media User Authentication](https://drive.google.com/file/d/1i1PPK5zA50B3c7AbSWazA_cKKH5gCFVF/view?usp=sharing)
 
